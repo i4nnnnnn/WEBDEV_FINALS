@@ -1,0 +1,213 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> StraySafe || Dashboard </title>
+    
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+    
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <style>
+        /* CRITICAL: Leaflet needs an explicit height to show up */
+        #map-container {
+            height: 350px !important; 
+            width: 100%;
+            border-radius: 15px;
+            box-shadow: inset 0 0 10px rgba(0,0,0,0.05);
+            background-color: #f8f1ed; 
+            border: 1px solid rgba(0,0,0,0.1);
+        }
+        .leaflet-container {
+            z-index: 1 !important;
+        }
+    </style>
+</head>
+<body>
+
+    <nav class="glass">
+        <div class="logo-container">
+            <img src="logo.jpg" alt="Logo" class="logo-img">
+            <div class="logo-text-group">
+                <div class="logo">StraySafe PH</div>
+                <div class="tagline"> Pawmalasakit & Pawmana </div>
+            </div>
+        </div>
+        <ul class="nav-links">
+            <li><a href="dashboard.html" data-tooltip="Home"><i class="ph-bold ph-house"></i></a></li>
+            <li><a href="#services" data-tooltip="Services"><i class="ph-bold ph-first-aid"></i></a></li>
+            <li><a href="#news" data-tooltip="Hub"><i class="ph-bold ph-hand-heart"></i></a></li>
+            <li><a href="#news" data-tooltip="Activity"><i class="ph-bold ph-chart-line-up"></i></a></li>
+            <li><a href="#contact" data-tooltip="Contact"><i class="ph-bold ph-envelope"></i></a></li>
+            <li><button class="btn-contact" title="Logout"><i class="ph-bold ph-sign-out"></i></button></li>
+        </ul>
+    </nav>
+
+    <main style="padding: 40px 5% 60px; min-height: auto;"> 
+    
+    <section class="dashboard-intro">
+        <h4 style="color: var(--terracotta); text-transform: uppercase; font-size: 0.8rem; font-weight: 800; letter-spacing: 1px;">Internal Portal</h4>
+        <h1 style="font-size: 2.5rem; margin-top: 10px;">Dashboard Overview</h1>
+        <p style="opacity: 0.7; max-width: 600px;">Welcome back, Iana. Monitoring live rescue data for Valenzuela City.</p>
+    </section>
+
+    <div class="dashboard-grid" style="margin-top: 20px;">
+        <div class="glass" style="padding: 20px; border-radius: 20px; min-height: 400px; position: relative; overflow: hidden;">
+            <h3 style="margin-bottom: 15px;"><i class="ph-bold ph-map-trifold" style="color: var(--terracotta);"></i> Live Incident Map</h3>
+            <div id="map-container"></div>
+        </div>
+    </div>
+
+    <div class="section-header-line" style="margin: 30px 0;">
+        <h4 class="line-title">Rescue Gallery</h4>
+        <div class="line-graphic"></div>
+        <span style="font-size: 0.85rem; font-weight: 800; color: var(--terracotta); text-transform: uppercase;">Transformations</span>
+    </div>
+
+    <div class="hospital-slider-container glass">
+        <div class="slider-wrapper">
+            <div class="slider-track">
+                <img src="bg.jpg" alt="Rescue 1">
+                <img src="https://freshwaveiaq.com/wp-content/uploads/2020/07/markus-winkler-PcKhVNNyEio-unsplash.jpg" alt="Rescue 2">
+                <img src="https://paws.org.ph/wp-content/uploads/2022/08/Header-Managed-Feeding.jpg" alt="Rescue 3">
+                <img src="https://bulacan.gov.ph/wp-content/uploads/2024/09/FREE-VET-SERVICES-FOR-FUR-PALS-scaled.jpg" alt="Rescue 4">
+                <img src="https://images.ctfassets.net/rt5zmd3ipxai/609ZKFlrmvifj1JfUgQ7rP/d9e942542584fcb930f7eec85d75b073/NVA_-_MASTER_-_60-40_-_CLINIC_-_VACCINATIONS_-_Veterinarian_Giving_a_Cat_a_Shot.jpg" alt="Rescue 5">
+            </div>
+        </div>
+        <div class="slider-progress">
+            <div class="progress-pill pill-1"><div class="progress-fill"></div></div>
+            <div class="progress-pill pill-2"><div class="progress-fill"></div></div>
+            <div class="progress-pill pill-3"><div class="progress-fill"></div></div>
+            <div class="progress-pill pill-4"><div class="progress-fill"></div></div>
+            <div class="progress-pill pill-5"><div class="progress-fill"></div></div>
+        </div>
+    </div>
+
+    <div class="section-header-line" style="margin: 30px 0;">
+        <h4 class="line-title">The Beneficiaries</h4>
+        <div class="line-graphic"></div>
+        <span style="font-size: 0.85rem; font-weight: 800; color: var(--terracotta); text-transform: uppercase;">Pawmana Network</span>
+    </div>
+
+    <div class="history-grid">
+        <div class="history-card glass">
+            <div style="font-size: 2rem; margin-bottom: 10px;">🏫</div>
+            <h4>OLFU Community</h4>
+            <p>Our main support base for student volunteers and digital logistics.</p>
+        </div>
+        <div class="history-card glass">
+            <div style="font-size: 2rem; margin-bottom: 10px;">🏥</div>
+            <h4>Partner Vets</h4>
+            <p>Local clinics providing subsidized rabies shots and emergency surgeries.</p>
+        </div>
+        <div class="history-card glass">
+            <div style="font-size: 2rem; margin-bottom: 10px;">🐾</div>
+            <h4>Polo Shelters</h4>
+            <p>Direct recipients of the "Sacks of Hope" donation drives.</p>
+        </div>
+    </div>
+</main>
+
+<footer id="contact">
+    <div class="footer-curve"></div>
+    <div class="footer-content">
+        <div class="footer-cta">
+            <h2> INTERACT WITH US </h2>
+            <p>Join our mission to protect the strays of Valenzuela City.</p>
+            
+            <form class="subscribe-group" id="newsletterForm">
+                <input type="email" id="subscriberEmail" placeholder="Your email address" required>
+                <button type="submit" class="btn-subscribe">Subscribe</button>
+            </form>
+
+            <div class="auth-container" id="authContainer" style="position: relative; width: 1100px; max-width: 100%; height: 520px; background: rgba(255, 255, 255, 0.05); margin: 40px auto 0; border-radius: 20px; border: 1px solid rgba(255, 255, 255, 0.1); overflow: hidden; display: flex;">
+                
+                <div class="overlay-panel" id="slidingOverlay" style="position: absolute; top: 0; left: 50%; width: 50%; height: 100%; background: var(--terracotta); color: white; z-index: 10; transition: all 0.6s cubic-bezier(0.7, 0, 0.3, 1); display: flex; align-items: center; justify-content: center; text-align: center; padding: 40px;">
+                    <div class="overlay-content">
+                        <h2 id="overlayTitle" style="margin-bottom: 10px;">Ready to Help?</h2>
+                        <p id="overlayText" style="font-size: 0.85rem; opacity: 0.9; margin-bottom: 25px;">Switch to the concern form to report an incident or make a donation.</p>
+                        <button id="switchBtn" style="padding: 12px 30px; background: white; color: var(--terracotta); border: none; border-radius: 50px; font-weight: 800; cursor: pointer; transition: 0.3s;">SWITCH VIEW</button>
+                    </div>
+                </div>
+
+                <div class="form-side side-left" style="width: 50%; padding: 50px; display: flex; flex-direction: column; justify-content: center; text-align: left;">
+                    <h3 style="color: var(--terracotta); margin-bottom: 5px;">Become a Member</h3>
+                    <p style="font-size: 0.75rem; opacity: 0.7; margin-bottom: 20px;">Join the frontlines. Apply for a membership card.</p>
+                    <form id="volunteerForm" style="display: flex; flex-direction: column; gap: 12px;">
+                        <input type="text" placeholder="Full Name" required style="padding: 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); color: white; font-size: 0.85rem; outline: none;">
+                        <input type="tel" placeholder="Phone Number" required style="padding: 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); color: white; font-size: 0.85rem; outline: none;">
+                        <select required style="padding: 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); background: #222; color: #ccc; font-size: 0.85rem; outline: none;">
+                            <option value="" disabled selected>Choose a Role</option>
+                            <option value="rescuer">Emergency Rescuer</option>
+                            <option value="feeder">Community Feeder</option>
+                            <option value="foster">Foster Home</option>
+                        </select>
+                        <button type="submit" class="btn-subscribe" style="background: var(--terracotta); border: none; cursor: pointer;">Submit Application</button>
+                    </form>
+                </div>
+
+                <div class="form-side side-right" style="width: 50%; padding: 50px; display: flex; flex-direction: column; justify-content: center; text-align: left;">
+                    <h3 style="color: var(--terracotta); margin-bottom: 5px;">Send a Concern</h3>
+                    <p style="font-size: 0.75rem; opacity: 0.7; margin-bottom: 20px;">Reporting an incident or want to donate?</p>
+                    <form id="concernForm" style="display: flex; flex-direction: column; gap: 12px;">
+                        <input type="text" placeholder="Subject / Location" required style="padding: 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); color: white; font-size: 0.85rem; outline: none;">
+                        <input type="tel" placeholder="Mobile Number" required style="padding: 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); color: white; font-size: 0.85rem; outline: none;">
+                        <select required style="padding: 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); background: #222; color: #ccc; font-size: 0.85rem; outline: none;">
+                            <option value="" disabled selected>Inquiry Type</option>
+                            <option value="rescue">Report Incident</option>
+                            <option value="donation">Donation</option>
+                            <option value="other">General Concern</option>
+                        </select>
+                        <textarea placeholder="Describe your concern..." required style="padding: 12px; border-radius: 8px; border: 1px solid rgba(255,255,255,0.1); background: rgba(255,255,255,0.05); color: white; font-size: 0.85rem; height: 100px; resize: none; outline: none;"></textarea>
+                        <button type="submit" class="btn-subscribe" style="background: var(--terracotta); border: none; cursor: pointer;">Send Message</button>
+                    </form>
+                </div>
+            </div>
+        </div>
+
+        <div class="footer-grid">
+            <div>
+                <h4>Contact Us</h4>
+                <p><i class="ph-bold ph-envelope-simple" style="color: var(--terracotta); margin-right: 8px;"></i> hello@straysafe.ph</p>
+                <p><i class="ph-bold ph-phone" style="color: var(--terracotta); margin-right: 8px;"></i> +63 928 888 7233</p>
+                <p><i class="ph-bold ph-device-mobile" style="color: var(--terracotta); margin-right: 8px;"></i> +63 912 345 6789</p>
+                <p><i class="ph-bold ph-map-pin" style="color: var(--terracotta); margin-right: 8px;"></i> Valenzuela City, Metro Manila</p>
+            </div>
+
+            <div>
+                <h4>Legal</h4>
+                <a href="#about" style="display:block; margin-bottom: 12px; text-decoration: none; color: inherit;">
+                    <i class="ph-bold ph-shield-check" style="color: var(--terracotta); margin-right: 8px;"></i> Privacy Policy
+                </a>
+                <a href="#services" style="display:block; margin-bottom: 12px; text-decoration: none; color: inherit;">
+                    <i class="ph-bold ph-file-text" style="color: var(--terracotta); margin-right: 8px;"></i> Terms of Services
+                </a>
+                <a href="#cookies" style="display:block; text-decoration: none; color: inherit;">
+                    <i class="ph-bold ph-cookie" style="color: var(--terracotta); margin-right: 8px;"></i> Cookies Policy
+                </a>
+            </div>
+
+            <div>
+                <h4>Follow Our Pack</h4>
+                <div class="social-icons">
+                    <i class="ph-bold ph-facebook-logo"></i>
+                    <i class="ph-bold ph-instagram-logo"></i>
+                    <i class="ph-bold ph-tiktok-logo"></i>
+                    <i class="ph-bold ph-twitter-logo"></i>
+                    <i class="ph-bold ph-youtube-logo"></i>
+                </div>
+            </div>
+        </div> 
+
+        <div style="margin-top: 60px; opacity: 0.5; font-size: 0.75rem; text-align: center; width: 100%;">
+            © 2026 StraySafe PH | Digital Response Project | BS EMC OLFU
+        </div>
+    </div>
+</footer>
+
+    <script src="dashboard.js"></script>
+</body>
+</html>
