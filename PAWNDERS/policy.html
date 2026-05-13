@@ -1,0 +1,222 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> Legal Policies | StraySafe PH </title>
+    <link rel="stylesheet" href="style.css">
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <style>
+        /* Extra styling for legal readability while keeping the glass theme */
+        .legal-body {
+            padding: 120px 5% 60px 5%; /* Space for fixed nav */
+            max-width: 1000px;
+            margin: 0 auto;
+        }
+        .legal-section {
+            margin-bottom: 40px;
+            padding: 40px;
+            color: #333;
+        }
+        .legal-section h2 {
+            color: var(--terracotta);
+            margin-bottom: 20px;
+            display: flex;
+            align-items: center;
+            gap: 10px;
+        }
+        .legal-section p, .legal-section li {
+            line-height: 1.6;
+            margin-bottom: 15px;
+            font-size: 0.95rem;
+        }
+        .legal-section ul {
+            padding-left: 20px;
+        }
+    </style>
+</head>
+
+<body>
+
+    <div class="login-overlay" id="loginOverlay">
+        <div class="login-card glass">
+            <span class="close-btn" id="closeLogin">&times;</span>
+            
+            <div id="signInView">
+                <h2>Member Portal</h2>
+                <p>Access the StraySafe community dashboard.</p>
+                
+                <form id="mainSignInForm" action="dashboard.html">
+                    <div class="input-group">
+                        <label>Email Address</label>
+                        <input type="email" id="loginEmail" placeholder="hello@straysafe.ph" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Password</label>
+                        <input type="password" placeholder="••••••••" required>
+                    </div>
+
+                    <div class="login-options">
+                        <label><input type="checkbox"> Remember me</label>
+                        <a href="#">Forgot Password?</a>
+                    </div>
+
+                    <button type="submit" class="btn-login"> Sign In </button>
+                </form>
+
+                <div class="signup-text">
+                    New to the pack? <a href="javascript:void(0)" id="toSignUp">Join us</a>
+                </div>
+            </div>
+
+            <div id="signUpView" class="hidden">
+                <h2>Join the Pack</h2>
+                <p>Create an account to start helping strays.</p>
+                
+                <form id="signUpForm" action="dashboard.html">
+                    <div class="input-group">
+                        <label>Full Name</label>
+                        <input type="text" placeholder="Your Name" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Email Address</label>
+                        <input type="email" id="regEmail" placeholder="youraccount@email.com" required>
+                    </div>
+                    <div class="input-group">
+                        <label>Password</label>
+                        <input type="password" placeholder="•••••••••••" required>
+                    </div>
+
+                    <div class="login-options">
+                        <label style="font-size: 0.7rem; display: flex; align-items: center; gap: 5px;">
+                            <input type="checkbox" required> I have read and agree to the <a href="#"> Terms & Privacy Agreement </a>
+                        </label>
+                    </div>
+
+                    <button type="submit" class="btn-login"> Create Account </button>
+                </form>
+
+                <div class="signup-text">
+                    Already a member? <a href="javascript:void(0)" class="toSignInLink">Sign In</a>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <!-- KEEPING YOUR NAV -->
+    <nav class="glass">
+        <div class="logo-container">
+            <a href="log.html" style="display: flex; align-items: center; gap: 12px; text-decoration: none;">
+                <img src="logo.jpg" alt="Logo" class="logo-img">
+                <div class="logo-text-group">
+                    <div class="logo">StraySafe PH</div>
+                    <div class="tagline"> Pawmalasakit & Pawmana </div>
+                </div>
+            </a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="index.html" data-tooltip="Home"><i class="ph-bold ph-house"></i></a></li>
+            <li><a href="#privacy" data-tooltip="Privacy"><i class="ph-bold ph-shield-check"></i></a></li>
+            <li><a href="#terms" data-tooltip="Terms"><i class="ph-bold ph-file-text"></i></a></li>
+            <li><a href="#cookies" data-tooltip="Cookies"><i class="ph-bold ph-cookie"></i></a></li>
+            <li><button class="btn-contact" id="openLogin" title="Account"><i class="ph-bold ph-user-circle-plus"></i></button></li>
+        </ul>
+    </nav>
+
+    <!-- NEW LEGAL BODY SECTION -->
+    <main class="legal-body">
+        
+        <!-- PRIVACY POLICY -->
+        <section id="privacy" class="legal-section glass">
+            <h2><i class="ph-bold ph-shield-check"></i> Privacy Policy</h2>
+            <p>At StraySafe PH, we prioritize the protection of your personal information. This policy explains how we handle your data within the Valenzuela City stray response ecosystem.</p>
+            <ul>
+                <li><strong>Information Collection:</strong> We collect names, contact details, and location data specifically when you report an incident via Pawmalasakit.</li>
+                <li><strong>Data Usage:</strong> Your data is used exclusively to coordinate animal rescues and verify the authenticity of reports.</li>
+                <li><strong>Safety:</strong> We do not sell or trade your data to third-party advertisers.</li>
+            </ul>
+        </section>
+
+        <!-- TERMS OF SERVICE -->
+        <section id="terms" class="legal-section glass">
+            <h2><i class="ph-bold ph-file-text"></i> Terms of Service</h2>
+            <p>By using the StraySafe PH platform, you agree to follow our community guidelines aimed at ensuring the safety of both humans and animals.</p>
+            <ul>
+                <li><strong>Reporting Integrity:</strong> You agree to provide accurate information. False reports delay emergency responses for animals in actual need.</li>
+                <li><strong>Code of Conduct:</strong> Users must interact with the Pawmana Hub and community dashboard with respect. Harassment or abuse of the system will lead to account termination.</li>
+                <li><strong>Liability:</strong> StraySafe PH acts as a digital response manager. While we facilitate interventions, we are not responsible for the physical actions of individual volunteers.</li>
+            </ul>
+        </section>
+
+        <!-- COOKIE POLICY -->
+        <section id="cookies" class="legal-section glass">
+            <h2><i class="ph-bold ph-cookie"></i> Cookie Policy</h2>
+            <p>To make your "Member Portal" experience smoother, we use cookies to remember your login state and preferences.</p>
+            <ul>
+                <li><strong>Essential Cookies:</strong> These are required to keep you signed in to your dashboard.</li>
+                <li><strong>Performance Cookies:</strong> These help us understand which sections (like Furcast or Pawmana) are most utilized by the community.</li>
+                <li><strong>Control:</strong> You can disable cookies in your browser settings, but please note that some glassmorphism UI elements and login features may not function as intended.</li>
+            </ul>
+        </section>
+
+    </main>
+
+    <!-- KEEPING YOUR FOOTER -->
+    <footer id="contact">
+        <div class="footer-curve"></div>
+        <div class="footer-content">
+            <div class="footer-cta">
+                <h2> INTERACT WITH US </h2>
+                <p>Join our mission to protect the strays of Valenzuela City.</p>
+            </div>
+
+            <div class="footer-grid">
+                <div>
+                    <h4>Contact Us</h4>
+                    <p><i class="ph-bold ph-envelope-simple" style="color: var(--terracotta); margin-right: 8px;"></i> hello@straysafe.ph</p>
+                    <p><i class="ph-bold ph-phone" style="color: var(--terracotta); margin-right: 8px;"></i> +63 928 888 7233</p>
+                    <p><i class="ph-bold ph-device-mobile" style="color: var(--terracotta); margin-right: 8px;"></i> (02) 8123-4567</p>
+                    <p><i class="ph-bold ph-map-pin" style="color: var(--terracotta); margin-right: 8px;"></i> Valenzuela City, Metro Manila</p>
+                </div>
+
+ <div>
+    <h4> Legal </h4>
+    <!-- Connects to Privacy section in legal.html -->
+    <a href="policy.html#privacy" style="display:block; margin-bottom: 12px; text-decoration: none; color: inherit;">
+        <i class="ph-bold ph-shield-check" style="color: var(--terracotta); margin-right: 8px;"></i> Privacy Policy
+    </a>
+
+    <!-- Connects to Terms section in legal.html -->
+    <a href="policy.html#terms" style="display:block; margin-bottom: 12px; text-decoration: none; color: inherit;">
+        <i class="ph-bold ph-file-text" style="color: var(--terracotta); margin-right: 8px;"></i> Terms of Services
+    </a>
+
+    <!-- Connects to Cookie section in legal.html -->
+    <a href="policy.html#cookies" style="display:block; text-decoration: none; color: inherit;">
+        <i class="ph-bold ph-cookie" style="color: var(--terracotta); margin-right: 8px;"></i> Cookie Policy
+    </a>
+</div>
+
+                <div>
+                    <h4>Follow Our Pack</h4>
+                    <div class="social-icons">
+                        <i class="ph-bold ph-facebook-logo"></i>
+                        <i class="ph-bold ph-instagram-logo"></i>
+                        <i class="ph-bold ph-tiktok-logo"></i>
+                        <i class="ph-bold ph-twitter-logo"></i>
+                        <i class="ph-bold ph-youtube-logo"></i>
+                    </div>
+                </div>
+            </div> 
+
+            <div style="margin-top: 60px; opacity: 0.5; font-size: 0.75rem; text-align: center; width: 100%;">
+                © 2026 StraySafe PH | Digital Response Project | BS EMC OLFU
+            </div>
+        </div>
+    </footer>
+
+
+    <script src="dashboard.js"></script>
+    <script src="script.js"></script>
+</body>
+</html>

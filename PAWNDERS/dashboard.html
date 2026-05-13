@@ -1,0 +1,521 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> StraySafe || User Dashboard </title>
+
+    <link rel="stylesheet" href="dashboard.css">
+    <link rel="stylesheet" href="https://unpkg.com/leaflet@1.9.4/dist/leaflet.css" />
+
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <script src="https://unpkg.com/leaflet@1.9.4/dist/leaflet.js"></script>
+
+    <style>
+        /* --- CRITICAL UI FIXES --- */
+        #map-container {
+            height: 350px !important;
+            width: 100%;
+            border-radius: 15px;
+            box-shadow: inset 0 0 10px rgba(0, 0, 0, 0.05);
+            background-color: #f8f1ed;
+            border: 1px solid rgba(0, 0, 0, 0.1);
+        }
+
+        .leaflet-container {
+            z-index: 1 !important;
+        }
+
+        /* --- ACTIVITY LOG & WISHLIST --- */
+        .activity-list::-webkit-scrollbar {
+            width: 5px;
+        }
+
+        .activity-list::-webkit-scrollbar-thumb {
+            background: #d97706;
+            border-radius: 10px;
+        }
+
+        .activity-item {
+            transition: transform 0.2s ease;
+            border: 1px solid rgba(0, 0, 0, 0.05);
+        }
+
+        .activity-item:hover {
+            transform: scale(1.01);
+            background: rgba(255, 255, 255, 0.8);
+        }
+
+        .wishlist-icon.active {
+            color: #e11d48 !important;
+        }
+    </style>
+</head>
+
+<body>
+
+    <nav class="glass">
+        <div class="logo-container">
+            <a href="log.html" style="display: flex; align-items: center; gap: 12px; text-decoration: none;">
+                <img src="logo.jpg" alt="Logo" class="logo-img">
+                <div class="logo-text-group">
+                    <div class="logo">StraySafe PH</div>
+                    <div class="tagline"> Pawmalasakit & Pawmana </div>
+                </div>
+            </a>
+        </div>
+        <ul class="nav-links">
+            <li><a href="dashboard.html" data-tooltip="Home"><i class="ph-bold ph-house"></i></a></li>
+            <li><a href="#services" data-tooltip="Services"><i class="ph-bold ph-first-aid"></i></a></li>
+            <li><a href="#news" data-tooltip="Hub"><i class="ph-bold ph-hand-heart"></i></a></li>
+            <li><a href="#" id="openActivity" data-tooltip="Activity"><i class="ph-bold ph-chart-line-up"></i></a></li>
+            <li><a href="#contact" data-tooltip="Contact"><i class="ph-bold ph-envelope"></i></a></li>
+            <li><button class="btn-contact" title="Logout" onclick="location.href='index.html'"><i class="ph-bold ph-sign-out"></i></button></li>
+        </ul>
+    </nav>
+
+    <main style="padding: 40px 5% 60px; min-height: auto;">
+
+        <!-- DASHBOARD INTRO -->
+        <section class="dashboard-intro">
+            <h4 style="color: var(--terracotta); text-transform: uppercase; font-size: 0.8rem; font-weight: 800; letter-spacing: 1px;">Internal Portal</h4>
+            <h1 style="font-size: 2.5rem; margin-top: 10px;">Dashboard Overview</h1>
+            <p style="opacity: 0.7; max-width: 600px;">Welcome back, User. Monitoring live rescue data for Valenzuela City.</p>
+        </section>
+
+        <!-- LIVE MAP -->
+        <div class="dashboard-grid" style="margin-top: 20px;">
+            <div class="glass" style="padding: 20px; border-radius: 20px; min-height: 400px; position: relative; overflow: hidden;">
+                <h3 style="margin-bottom: 15px;"><i class="ph-bold ph-map-trifold" style="color: var(--terracotta);"></i> Live Map </h3>
+                <div id="map-container"></div>
+            </div>
+        </div>
+
+        <br><br>
+
+        <!-- FACILITY SLIDER -->
+        <section>
+            <div class="section-header-line" style="margin: 30px 0;">
+                <h4 class="line-title"> Meet Our Strays </h4>
+                <div class="line-graphic"></div>
+                <div class="label-scroller">
+                    <span class="label-item lbl-1">Rapid Response</span>
+                    <span class="label-item lbl-2">Safe Shelters</span>
+                    <span class="label-item lbl-3">Daily Feeding</span>
+                    <span class="label-item lbl-4">Vet Partners</span>
+                    <span class="label-item lbl-5">Vaccine Drives</span>
+                </div>
+            </div>
+
+            <div class="hospital-slider-container glass">
+                <div class="slider-wrapper">
+                    <div class="slider-track">
+                        <img src="bg.jpg" alt="Facility 1">
+                        <img src="https://freshwaveiaq.com/wp-content/uploads/2020/07/markus-winkler-PcKhVNNyEio-unsplash.jpg" alt="Facility 2">
+                        <img src="https://paws.org.ph/wp-content/uploads/2022/08/Header-Managed-Feeding.jpg" alt="Facility 3">
+                        <img src="https://bulacan.gov.ph/wp-content/uploads/2024/09/FREE-VET-SERVICES-FOR-FUR-PALS-scaled.jpg" alt="Facility 4">
+                        <img src="https://images.ctfassets.net/rt5zmd3ipxai/609ZKFlrmvifj1JfUgQ7rP/d9e942542584fcb930f7eec85d75b073/NVA_-_MASTER_-_60-40_-_CLINIC_-_VACCINATIONS_-_Veterinarian_Giving_a_Cat_a_Shot.jpg?fit=fill&fm=webp&h=578&w=1070&q=72" alt="Facility 5">
+                    </div>
+                </div>
+                <div class="slider-progress">
+                    <div class="progress-pill pill-1"><div class="progress-fill"></div></div>
+                    <div class="progress-pill pill-2"><div class="progress-fill"></div></div>
+                    <div class="progress-pill pill-3"><div class="progress-fill"></div></div>
+                    <div class="progress-pill pill-4"><div class="progress-fill"></div></div>
+                    <div class="progress-pill pill-5"><div class="progress-fill"></div></div>
+                </div>
+            </div>
+        </section>
+
+        <br><br>
+
+        <!-- ABOUT SECTION -->
+        <section>
+            <div class="section-header-line" style="margin: 30px 0;">
+                <h4 class="line-title"> Our Story </h4>
+                <div class="line-graphic"></div>
+                <span style="font-size: 0.85rem; font-weight: 800; color: var(--terracotta); text-transform: uppercase;"> About Us </span>
+            </div>
+
+            <div class="about-content">
+                <h3>The Mission</h3>
+                <h2>Compassion Since 2026 </h2>
+                <p>
+                    What started as a student initiative at OLFU has evolved into a vital digital reporting platform dedicated to animal welfare. At StraySafe PH, we believe community-driven reporting and swift action can solve the stray crisis one paw at a time. By bridging the gap between local residents and veterinary responders, we empower the citizens of Valenzuela City to act as the eyes and ears for those who cannot speak for themselves.
+                </p>
+
+                <div class="history-grid">
+                    <div class="history-card glass">
+                        <h4>The Foundation</h4>
+                        <p>Founded by student developers to bridge the gap between spotting strays and providing medical aid.</p>
+                    </div>
+                    <div class="history-card glass">
+                        <h4>Tech For Good</h4>
+                        <p>In 2026, we scaled to a real-time dashboard integrating veterinary clinics and volunteer responders.</p>
+                    </div>
+                    <div class="history-card glass">
+                        <h4>Impact Driven</h4>
+                        <p>Empowering residents of Valenzuela City to act as the eyes and ears for those who cannot speak for themselves.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <br><br>
+
+        <!-- SERVICES -->
+        <section id="services">
+            <div class="section-header-line" style="margin: 30px 0;">
+                <h4 class="line-title"> Pawmalasakit Services </h4>
+                <div class="line-graphic"></div>
+                <span style="font-size: 0.85rem; font-weight: 800; color: var(--terracotta); text-transform: uppercase;"> Pawmana Hub </span>
+            </div>
+
+            <div class="services-grid">
+                <div class="service-card glass" onclick="openServiceModal('Report Case', '🚑', 'Submit reports for animals in urgent need of assistance.')">
+                    <span class="service-icon">🚑</span>
+                    <h4>Report Cases</h4>
+                    <p>Submit reports with location and photos for animals in urgent need of assistance.</p>
+                </div>
+                <div class="service-card glass" onclick="openServiceModal('Donation Hub', '🦴', 'Coordinates food donations and localized feeding stations.')">
+                    <span class="service-icon">🦴</span>
+                    <h4>Donation Hub</h4>
+                    <p>Coordinates food donations and localized feeding stations in community centers.</p>
+                </div>
+                <div class="service-card glass" onclick="openServiceModal('Safe Fostering', '🏠', 'Matches rescued strays with vetted temporary homes.')">
+                    <span class="service-icon">🏠</span>
+                    <h4>Safe Fostering</h4>
+                    <p>Matches rescued strays with vetted temporary homes within our network.</p>
+                </div>
+                <div class="service-card glass" onclick="openServiceModal('Vax & Spay', '💉', 'Access subsidized veterinary programs.')">
+                    <span class="service-icon">💉</span>
+                    <h4>Vax & Spay</h4>
+                    <p>Access to subsidized veterinary programs for vaccination and population control.</p>
+                </div>
+                <div class="service-card glass" onclick="openServiceModal('Volunteer', '🤝', 'Join our team of responders and managers.')">
+                    <span class="service-icon">🤝</span>
+                    <h4>Volunteer</h4>
+                    <p>Join our team of responders, handlers, and community managers.</p>
+                </div>
+                <div class="service-card glass" onclick="openServiceModal('Vet Locator', '🗺️', 'Find the nearest partner clinic.')">
+                    <span class="service-icon">🗺️</span>
+                    <h4>Vet Locator</h4>
+                    <p>Find the nearest partner clinic and 24/7 animal emergency hotlines.</p>
+                </div>
+            </div>
+        </section>
+
+        <br><br>
+
+        <!-- NEWS HUB -->
+        <section id="news">
+            <div class="section-header-line" style="margin: 30px 0;">
+                <h4 class="line-title"> PAWMANA CENTRAL HUB </h4>
+                <div class="line-graphic"></div>
+                <span style="font-size: 0.85rem; font-weight: 800; color: var(--terracotta); text-transform: uppercase;"> LIVE RESOURCE FEED </span>
+            </div>
+
+            <div class="news-marquee-container">
+                <div class="news-track">
+                    <div class="news-box glass">
+                        <span class="news-tag tag-good">Donations</span>
+                        <h4>Sacks of Hope</h4>
+                        <p>Received 15 bags of premium kibble from OLFU Student Council. Distribution to Polo Shelters starts at 3PM.</p>
+                        <span class="news-date">April 28, 2026</span>
+                    </div>
+
+                    <div class="news-box glass">
+                        <span class="news-tag tag-bad">Urgent Request</span>
+                        <h4>Medicine Needed</h4>
+                        <p>Barangay Malinta Hub is low on anti-rabies vaccines and wound sprays. Stakeholders, please check the 'Supply' tab.</p>
+                        <span class="news-date">April 29, 2026</span>
+                    </div>
+
+                    <div class="news-box glass">
+                        <span class="news-tag tag-review">Clinic Partner</span>
+                        <h4>City Vet Sync</h4>
+                        <p>New slots opened for free spay/neuter in Valenzuela City. Valid for Pawmana registered rescuers only.</p>
+                        <span class="patient-name">— Dr. Aris V.</span>
+                        <span class="news-date">April 25, 2026</span>
+                    </div>
+
+                    <div class="news-box glass">
+                        <span class="news-tag tag-good">Stakeholders</span>
+                        <h4>Quarterly Meet</h4>
+                        <p>LGUs and NGO partners have successfully integrated the new reporting API for faster response times.</p>
+                        <span class="news-date">April 20, 2026</span>
+                    </div>
+
+                    <div class="news-box glass">
+                        <span class="news-tag tag-review">Food Hub</span>
+                        <h4>Inventory Restock</h4>
+                        <p>Wet food supplies for senior rescues are now 100% replenished at the Central Valenzuela warehouse.</p>
+                        <span class="news-date">April 29, 2026</span>
+                    </div>
+
+                    <div class="news-box glass">
+                        <span class="news-tag tag-good">Donations</span>
+                        <h4>Sacks of Hope</h4>
+                        <p>Received 15 bags of premium kibble from OLFU Student Council. Distribution to Polo Shelters starts at 3PM.</p>
+                        <span class="news-date">April 28, 2026</span>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <br><br>
+
+        <!-- PRODUCT DONATIONS -->
+        <section>
+            <div class="section-header-line" style="margin: 30px 0;">
+                <h4 class="line-title"> Donate & Receive </h4>
+                <div class="line-graphic"></div>
+                <span style="font-size: 0.85rem; font-weight: 800; color: var(--terracotta); text-transform: uppercase;"> Available Items </span>
+            </div>
+
+            <div class="products-grid">
+                <!-- Product Card 1 -->
+                <div class="product-card">
+                    <span class="wishlist-icon" onclick="this.classList.toggle('active'); logActivity('Buddy', 'liked')">❤</span>
+                    <div class="img-container">
+                        <img src="https://img.lazcdn.com/g/p/e01ac86d29d7cdab57306d9ef45bc45a.jpg_720x720q80.jpg" alt="Buddy">
+                    </div>
+                    <div class="product-info">
+                        <h4> Dog & Puppy Toys </h4>
+                        <p style="color: #888; font-size: 13px; margin: 5px 0 15px 0;"> Versatile and Non-toxic dog chew toys for puppies and adult dogs. </p>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span class="price" style="font-size: 16px;"> By Jun Salarzon </span>
+                            <button class="add-btn" onclick="logActivity('Buddy', 'wishlist')">+</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Card 2 -->
+                <div class="product-card">
+                    <span class="wishlist-icon" onclick="this.classList.toggle('active'); logActivity('Luna', 'liked')">❤</span>
+                    <div class="img-container">
+                        <img src="https://img.lazcdn.com/g/p/3bebed9e272fd7c586d5f9158fe12cb8.jpg_720x720q80.jpg_.webp" alt="Luna">
+                    </div>
+                    <div class="product-info">
+                        <h4> 【30pcs/50pcs/100pcs】Cat Treats </h4>
+                        <p style="color: #888; font-size: 13px; margin: 5px 0 15px 0;"> Cat Strip Wet Food </p>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span class="price" style="font-size: 16px;"> By Cristin Dimapelis </span>
+                            <button class="add-btn" onclick="logActivity('Luna', 'wishlist')">+</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Card 3 -->
+                <div class="product-card">
+                    <span class="wishlist-icon" onclick="this.classList.toggle('active'); logActivity('Max', 'liked')">❤</span>
+                    <div class="img-container">
+                        <img src="https://down-ph.img.susercontent.com/file/ph-11134207-81ztj-mgpwjx20b3t44b_tn" alt="Max">
+                    </div>
+                    <div class="product-info">
+                        <h4> Petcher 9-in-1 Complete Pet Care Madre De Cacao Bundle </h4>
+                        <p style="color: #888; font-size: 13px; margin: 5px 0 15px 0;"> Grooming & Hygiene Set for Dogs and Cats </p>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span class="price" style="font-size: 16px;"> By Kaitleen Carulla </span>
+                            <button class="add-btn" onclick="logActivity('Max', 'wishlist')">+</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Product Card 4 -->
+                <div class="product-card">
+                    <span class="wishlist-icon" onclick="this.classList.toggle('active'); logActivity('Cooper', 'liked')">❤</span>
+                    <div class="img-container">
+                        <img src="https://encrypted-tbn1.gstatic.com/shopping?q=tbn:ANd9GcRQ_SQAq-iMYgoFpSB2CPEgYZd-dCjYjOiGXzL0DM-vv8DFczKsVecaPOKvRPMSHaGORz3ipVF8l7PHER52FVQSfGZ037f8" alt="Cooper">
+                    </div>
+                    <div class="product-info">
+                        <h4> Washable and Foldable Pet Bed </h4>
+                        <p style="color: #888; font-size: 13px; margin: 5px 0 15px 0;"> Safe hand-me-down bed for Cats & Dogs </p>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span class="price" style="font-size: 16px;"> By Mr. Batumbakal </span>
+                            <button class="add-btn" onclick="logActivity('Cooper', 'wishlist')">+</button>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+
+        <br><br>
+
+        <!-- RESCUED ANIMALS -->
+        <section>
+            <div class="section-header-line" style="margin: 30px 0;">
+                <h4 class="line-title"> Meet Our Strays </h4>
+                <div class="line-graphic"></div>
+                <span style="font-size: 0.85rem; font-weight: 800; color: var(--terracotta); text-transform: uppercase;"> Rescued Animals </span>
+            </div>
+
+            <div class="products-grid">
+                <!-- Animal Card 1 -->
+                <div class="product-card">
+                    <span class="wishlist-icon" onclick="this.classList.toggle('active'); logActivity('Buddy', 'liked')">❤</span>
+                    <div class="img-container">
+                        <img src="https://preview.redd.it/my-rescued-aspin-v0-xj6iwmy9g5of1.jpg?width=640&crop=smart&auto=webp&s=f0144dfab09cbb0516134074e5b509440db2964a" alt="Buddy">
+                    </div>
+                    <div class="product-info">
+                        <h4> Buddy </h4>
+                        <p style="color: #888; font-size: 13px; margin: 5px 0 15px 0;"> Rescued Aspin from Mulawinan Street, Valenzuela City </p>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span class="price" style="font-size: 16px;"> Age: 5 years old </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Animal Card 2 -->
+                <div class="product-card">
+                    <span class="wishlist-icon" onclick="this.classList.toggle('active'); logActivity('Luna', 'liked')">❤</span>
+                    <div class="img-container">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcQDU3Qh9ggWA0UgZUr0s57nSwrHGvwICXsuQA&s" alt="Luna">
+                    </div>
+                    <div class="product-info">
+                        <h4> Luna </h4>
+                        <p style="color: #888; font-size: 13px; margin: 5px 0 15px 0;"> Rescued Puspin from Maysan Street, Valenzuela City </p>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span class="price" style="font-size: 16px;"> Age: 3 years old </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Animal Card 3 -->
+                <div class="product-card">
+                    <span class="wishlist-icon" onclick="this.classList.toggle('active'); logActivity('Max', 'liked')">❤</span>
+                    <div class="img-container">
+                        <img src="https://upload.wikimedia.org/wikipedia/commons/2/24/0927Close_up_photographs_of_Askal_puppies_of_the_Philippines_11.jpg" alt="Max">
+                    </div>
+                    <div class="product-info">
+                        <h4> Max </h4>
+                        <p style="color: #888; font-size: 13px; margin: 5px 0 15px 0;"> Rescued Aspin from Paso De Blas Street, Valenzuela City </p>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span class="price" style="font-size: 16px;"> Age: 1 year old </span>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- Animal Card 4 -->
+                <div class="product-card">
+                    <span class="wishlist-icon" onclick="this.classList.toggle('active'); logActivity('Cooper', 'liked')">❤</span>
+                    <div class="img-container">
+                        <img src="https://encrypted-tbn0.gstatic.com/images?q=tbn:ANd9GcTTt5BK1DPFghidfwRTHVHip0j9CAV8-j-97Q&s" alt="Cooper">
+                    </div>
+                    <div class="product-info">
+                        <h4> Cooper </h4>
+                        <p style="color: #888; font-size: 13px; margin: 5px 0 15px 0;"> Rescued Puspin from Marulas Street, Valenzuela City </p>
+                        <div style="display: flex; justify-content: space-between; align-items: center;">
+                            <span class="price" style="font-size: 16px;"> Age: 4 years old </span>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <br> <br>
+
+    <!-- FOOTER -->
+    <footer id="contact">
+        <div class="footer-curve"></div>
+        <div class="footer-content">
+            <div class="footer-cta">
+                <h2> INTERACT WITH US </h2>
+                <p>Join our mission to protect the strays of Valenzuela City.</p>
+            </div>
+
+            <div class="footer-grid">
+                <div>
+                    <h4>Contact Us</h4>
+                    <p><i class="ph-bold ph-envelope-simple" style="color: var(--terracotta); margin-right: 8px;"></i> hello@straysafe.ph</p>
+                    <p><i class="ph-bold ph-phone" style="color: var(--terracotta); margin-right: 8px;"></i> +63 928 888 7233</p>
+                    <p><i class="ph-bold ph-device-mobile" style="color: var(--terracotta); margin-right: 8px;"></i> (02) 8123-4567</p>
+                    <p><i class="ph-bold ph-map-pin" style="color: var(--terracotta); margin-right: 8px;"></i> Valenzuela City, Metro Manila</p>
+                </div>
+
+                <div>
+                    <h4> Legal </h4>
+                    <a href="#about" style="display:block; margin-bottom: 12px; text-decoration: none; color: inherit;">
+                        <i class="ph-bold ph-shield-check" style="color: var(--terracotta); margin-right: 8px;"></i> Privacy Policy
+                    </a>
+                    <a href="#services" style="display:block; margin-bottom: 12px; text-decoration: none; color: inherit;">
+                        <i class="ph-bold ph-file-text" style="color: var(--terracotta); margin-right: 8px;"></i> Terms of Services
+                    </a>
+                    <a href="#" style="display:block; text-decoration: none; color: inherit;">
+                        <i class="ph-bold ph-cookie" style="color: var(--terracotta); margin-right: 8px;"></i> Cookie Policy
+                    </a>
+                </div>
+
+                <div>
+                    <h4>Follow Our Pack</h4>
+                    <div class="social-icons">
+                        <i class="ph-bold ph-facebook-logo"></i>
+                        <i class="ph-bold ph-instagram-logo"></i>
+                        <i class="ph-bold ph-tiktok-logo"></i>
+                        <i class="ph-bold ph-twitter-logo"></i>
+                        <i class="ph-bold ph-youtube-logo"></i>
+                    </div>
+                </div>
+            </div>
+
+            <div style="margin-top: 60px; opacity: 0.5; font-size: 0.75rem; text-align: center; width: 100%;">
+                © 2026 StraySafe PH | Digital Response Project | BS EMC OLFU
+            </div>
+        </div>
+    </footer>
+
+    <!-- SERVICE MODAL -->
+    <div class="login-overlay" id="serviceModal" style="display: none;">
+        <div class="login-card glass">
+            <span class="close-btn" id="closeService" style="cursor: pointer; float: right; font-size: 1.5rem;">&times;</span>
+            <div style="text-align: center; margin-bottom: 20px;">
+                <span id="modalIcon" style="font-size: 3rem;"></span>
+                <h2 id="modalTitle" style="color: var(--terracotta); margin-top: 10px;"></h2>
+                <p id="modalDescription" style="font-size: 0.9rem; color: #555;"></p>
+            </div>
+            <form id="serviceInfoForm">
+                <div style="margin-bottom: 15px; text-align: left;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold;">Your Name</label>
+                    <input type="text" placeholder="Iana Jhezelle B. Canumay" required style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ddd; box-sizing: border-box;">
+                </div>
+                <div style="margin-bottom: 15px; text-align: left;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold;">Contact Number</label>
+                    <input type="tel" placeholder="09XXXXXXXXX" required style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ddd; box-sizing: border-box;">
+                </div>
+                <div style="margin-bottom: 20px; text-align: left;">
+                    <label style="display: block; margin-bottom: 5px; font-weight: bold;"> Location/Details </label>
+                    <textarea placeholder="e.g. Near Lawang Bato, Valenzuela..." required style="width: 100%; padding: 12px; border-radius: 8px; border: 1px solid #ddd; box-sizing: border-box; height: 80px;"></textarea>
+                </div>
+                <button type="submit" class="btn-login" style="width: 100%; padding: 12px; background: var(--terracotta); color: white; border: none; border-radius: 8px; font-weight: bold; cursor: pointer;"> Submit </button>
+            </form>
+        </div>
+    </div>
+
+    <!-- ACTIVITY MODAL -->
+    <div class="login-overlay" id="activityModal" style="display: none;">
+        <div class="login-card glass" style="max-width: 600px; width: 90%;">
+            <span class="close-btn" id="closeActivity" style="cursor: pointer; float: right; font-size: 1.5rem;">&times;</span>
+            <div style="text-align: left; margin-bottom: 20px;">
+                <h2 style="color: var(--terracotta);"><i class="ph-bold ph-chart-line-up"></i> Your Activity Log</h2>
+                <p style="font-size: 0.85rem; opacity: 0.7;">History of your contributions and interactions.</p>
+            </div>
+            <div class="activity-list" id="activityList" style="max-height: 400px; overflow-y: auto; padding-right: 10px;">
+                <div class="activity-item glass" style="padding: 15px; margin-bottom: 12px; border-radius: 12px; display: flex; align-items: center; gap: 15px;">
+                    <div class="activity-icon" style="background: #ffe4e1; padding: 10px; border-radius: 50%;">🚑</div>
+                    <div style="flex-grow: 1;">
+                        <h4 style="margin: 0; font-size: 0.9rem;">Reported: Stray Cat in Lawang Bato</h4>
+                        <small style="opacity: 0.6;">May 6, 2026 | 2:30 PM</small>
+                    </div>
+                    <span class="status-tag" style="font-size: 0.7rem; background: #dcfce7; color: #166534; padding: 4px 8px; border-radius: 20px; font-weight: 800;">PENDING</span>
+                </div>
+            </div>
+        </div>
+    </div>
+
+    <script src="dashboard.js"></script>
+    <script src="script.js"></script>
+</body>
+
+</html>

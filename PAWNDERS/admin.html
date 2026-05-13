@@ -1,0 +1,172 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title> StraySafe || Admin Central </title>
+    
+    <!-- External Dependencies -->
+    <link rel="stylesheet" href="dashboard.css">
+    <script src="https://cdn.jsdelivr.net/npm/chart.js"></script>
+    <script src="https://unpkg.com/@phosphor-icons/web"></script>
+    <link rel="stylesheet" href="admin.css">
+</head>
+<body>
+
+<!-- SIDEBAR -->
+    <aside class="admin-sidebar">
+        <!-- Wrap the container in an anchor tag -->
+        <a href="log.html" style="text-decoration: none; color: inherit;">
+            <div class="logo-container">
+                <img src="logo.jpg" alt="Logo" style="width: 40px;">
+                <div class="logo-text-group">
+                    <div class="logo" style="font-size: 1.2rem; font-weight: bold;"> StraySafe PH </div>
+                    <div class="tagline" style="font-size: 0.8rem; opacity: 0.6;"> Pawnders Panel</div>
+                </div>
+            </div>
+        </a>
+
+        <ul class="admin-nav">
+            <li><a href="admin.html" class="active"><i class="ph-bold ph-squares-four"></i> Dashboard</a></li>
+            <li><a href="admin.html#Reports"><i class="ph-bold ph-shield-check"></i> Case Management</a></li>
+            <li><a href="admin.html#Reports"><i class="ph-bold ph-hand-coins"></i> Donations</a></li>
+            <li><a href="admin.html#notif"><i class="ph-bold ph-package"></i> Request Items</a></li>
+            <li><a href="admin.html#notif"><i class="ph-bold ph-users-three"></i> User Inventory</a></li>
+        </ul>
+
+        <a href="index.html" style="color: #e11d48; text-decoration: none; font-weight: bold; padding: 15px; display: flex; align-items: center; gap: 10px;">
+            <i class="ph-bold ph-sign-out"></i> Staff Log Out
+        </a>
+    </aside>
+
+    <main class="admin-main">
+
+        <!-- HEADER -->
+        <header style="display: flex; justify-content: space-between; align-items: center; margin-bottom: 40px;">
+            <div>
+                <h1 style="font-size: 2rem; margin: 0;"> Admin Overview </h1>
+                <p style="opacity: 0.6; margin: 5px 0 0 0;"> Welcome back, Administrator. Monitoring Valenzuela City's Stray Data. </p>
+            </div>
+
+           <div class="admin-profile-actions" style="display: flex; align-items: center; gap: 15px;">
+               <span style="font-weight: 600; color: #444;"> Admin User </span>
+               <button class="btn-contact" id="openLogin" title="Account" 
+                style="background: white; border: 1px solid rgba(0,0,0,0.1); padding: 10px; border-radius: 50%; cursor: pointer; display: flex; align-items: center; justify-content: center; transition: 0.3s;">
+            <i class="ph-bold ph-user-circle-plus" style="font-size: 1.5rem; color: var(--terracotta);"></i>
+        </button>
+    </div>
+
+        </header>
+
+<!-- STATS -->
+        <div class="stats-grid">
+            <div class="stat-card glass" id="stat-catipunan" style="background: #e0f2fe;">
+                <i class="ph-bold ph-users-four" style="color: #0369a1;"></i>
+                <h4 style="opacity: 0.7; margin: 0;">Members: Catipunan</h4>
+                <h2 style="font-size: 2rem; margin: 10px 0 0 0;">1,284</h2>
+            </div>
+            
+            <div class="stat-card glass" id="stat-asosasyon" style="background: #fef3c7;">
+                <i class="ph-bold ph-handshake" style="color: #b45309;"></i>
+                <h4 style="opacity: 0.7; margin: 0;">Members: Asosasyon</h4>
+                <h2 style="font-size: 2rem; margin: 10px 0 0 0;">856</h2>
+            </div>
+            
+            <div class="stat-card glass" id="stat-rescues" style="background: #dcfce7;">
+                <i class="ph-bold ph-dog" style="color: #15803d;"></i>
+                <h4 style="opacity: 0.7; margin: 0;">Total Rescues</h4>
+                <h2 style="font-size: 2rem; margin: 10px 0 0 0;">342</h2>
+            </div>
+            
+            <div class="stat-card glass" id="stat-fosters" style="background: #fce7f3;">
+                <i class="ph-bold ph-heart" style="color: #be185d;"></i>
+                <h4 style="opacity: 0.7; margin: 0;">Active Fosters</h4>
+                <h2 style="font-size: 2rem; margin: 10px 0 0 0;">48</h2>
+            </div>
+        </div>
+        </div>
+
+        <!-- GRAPHS -->
+        <div class="chart-container" id="Reports">
+            <div class="graph-box glass">
+                <h3><i class="ph-bold ph-chart-line"></i> Reports Case Trends</h3>
+                <div style="flex-grow: 1; position: relative;">
+                    <canvas id="reportsChart"></canvas>
+                </div>
+            </div>
+
+            <div class="graph-box glass">
+                <h3><i class="ph-bold ph-chart-pie-slice"></i> Donation Breakdown</h3>
+                <div style="flex-grow: 1; position: relative;">
+                    <canvas id="donationChart"></canvas>
+                </div>
+            </div>
+        </div>
+
+        <!-- UPDATED: NEW SECTIONS FOR REQUESTS, INVENTORY, NOTIFS & HOTLINES -->
+        <div class="management-section">
+            
+            <!-- Column 1: Actionable Data -->
+            <div>
+                <div class="info-card glass" style="margin-bottom: 20px;">
+                    <h3><i class="ph-bold ph-package"></i> Pending Item Requests</h3>
+                        <br>
+                    <div class="request-row">
+                        <div>
+                            <strong>User_Maria123</strong><br>
+                            <small>Requested: 5kg Dog Food</small>
+                        </div>
+                        <div>
+                            <button class="btn-acc" onclick="handleAction('Accept')">Accept</button>
+                            <button class="btn-dec" onclick="handleAction('Decline')">Decline</button>
+                        </div>
+                    </div>
+                </div>
+
+                <!-- FIXED SECTION START -->
+                <div class="info-card glass">
+                    <h3><i class="ph-bold ph-users-three"></i> User Inventory Review</h3>
+                    <table class="inventory-review-table">
+                        <thead>
+                            <tr>
+                                <th>User</th>
+                                <th>Item</th>
+                                <th>Stock</th>
+                            </tr>
+                        </thead>
+                        <tbody>
+                            <tr>
+                                <td style="font-weight: 600;">JohnD_2026</td>
+                                <td>First Aid Kit</td>
+                                <td><span style="background: rgba(0,0,0,0.05); padding: 2px 6px; border-radius: 4px;">2 Units</span></td>
+                                <td style="text-align: center; white-space: nowrap;">
+                                </td>
+                            </tr>
+                        </tbody>
+                    </table>
+                </div>
+                <!-- FIXED SECTION END -->
+            </div>
+
+            <!-- Column 2: Notifications & Emergency -->
+            <div id="notif">
+                <div class="info-card glass" style="margin-bottom: 20px;">
+                    <h3><i class="ph-bold ph-bell"></i> New Members</h3>
+                    <p style="font-size: 0.9rem; margin: 10px 0;"><i class="ph ph-user-plus"></i> <strong>Juan Dela Cruz</strong> joined <em>Catipunan</em></p>
+                    <p style="font-size: 0.9rem; margin: 10px 0;"><i class="ph ph-user-plus"></i> <strong>Sasha V.</strong> joined <em>Asosasyon</em></p>
+                </div>
+
+                <div class="info-card glass" style="border: 1px solid #fecaca;">
+                    <h3 style="color: #e11d48;"><i class="ph-bold ph-phone-call"></i> Emergency Hotlines</h3>
+                    <ul class="emergency-list">
+                        <br>
+                        <li><strong>Stray Rescue:</strong> (02) 8352-1000</li>
+                        <li><strong>Vet (Valenzuela):</strong> 0917-XXX-XXXX</li>
+                    </ul>
+                </div>
+            </div>
+        </div>
+    </main>
+    <script src="admin.js"></script>
+</body>
+</html>
